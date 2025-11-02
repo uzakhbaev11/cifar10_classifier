@@ -30,7 +30,7 @@ class Net(nn.Module):
         return x
 
 @st.cache_resource
-def load_model(path=".\models\cifar_net.pth"):
+def load_model(path="..\models\cifar_net.pth"):
     model = Net()
     device = torch.device("cpu")
     model.load_state_dict(torch.load(path, map_location=device))
