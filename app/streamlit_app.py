@@ -6,6 +6,7 @@ from PIL import Image
 import io
 import numpy as np
 import pandas as pd
+import os
 
 class Net(nn.Module):
     def __init__(self):
@@ -30,10 +31,16 @@ class Net(nn.Module):
         return x
 
 @st.cache_resource
-def load_model(path="..\models\cifar_net.pth"):
+def load_model():
+    # Определяем абсолютный путь к модели
+    current_dir = os.path.dirname(__file__)  # папка, где лежит streamlit_app.py
+    model_path = os.path.join(current_dir, "..", "models", "cifar_net.pth")
+    model_path = os.path.abspath(model_path)
+
+    # Загружаем модель
     model = Net()
     device = torch.device("cpu")
-    model.load_state_dict(torch.load(path, map_location=device))
+    model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
     return model
 
